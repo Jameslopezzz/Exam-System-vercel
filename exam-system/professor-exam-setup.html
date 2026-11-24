@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Exam Setup | EXAM SYSTEM</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+    />
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/professor.css">
+  </head>
+  <body data-role="professor">
+    <div class="app">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <div class="brand">
+            <div class="brand__crest">
+              <img src="images/PLMUN_logo.png" alt="PLMUN Logo">
+            </div>
+            <div class="brand__text">
+              <p class="brand__name">EXAM SYSTEM</p>
+              <p class="brand__sub">Pamantasan ng Lungsod ng Muntinlupa</p>
+            </div>
+          </div>
+          <nav class="nav">
+            <a href="professor-dashboard.html">Dashboard</a>
+            <a href="professor-monitoring.html">Live Monitoring</a>
+            <a href="professor-exam-creation.html" class="is-active">Exam Builder</a>
+            <a href="professor-reports.html">Reports</a>
+          </nav>
+          <div class="user-box">
+            <div>
+              <p class="user-box__name" data-user-name></p>
+              <p class="user-box__role">Professor</p>
+            </div>
+            <a class="signout" href="index.html">Sign out</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="page-title">
+          <h1 id="setupHeading">New examination</h1>
+          <p>Step 1 of 2 &middot; set up the exam. You add the questions in the next step.</p>
+        </div>
+
+        <ol class="stepper" aria-label="Progress">
+          <li class="stepper__item is-current"><span class="stepper__num">1</span> Exam setup</li>
+          <li class="stepper__item" id="stepTwo"><span class="stepper__num">2</span> <span id="stepTwoLabel">Add questions</span></li>
+        </ol>
+
+        <p class="notice notice--bad" id="setupError" hidden></p>
+        <p class="notice notice--warn" id="setupLock" hidden></p>
+
+        <form id="setupForm" class="grid" style="gap:1.25rem" novalidate>
+          <section class="card">
+            <header class="card__header"><h2>Exam details</h2><span class="badge" id="setupStatus" hidden></span></header>
+            <div class="card__body setup-grid">
+              <label class="field"><span class="field__label">Exam title</span>
+                <input class="input" id="fTitle" maxlength="150" required /></label>
+              <label class="field"><span class="field__label">Subject code</span>
+                <input class="input" id="fCode" maxlength="20" required /></label>
+              <label class="field"><span class="field__label">Subject name</span>
+                <input class="input" id="fSubject" maxlength="150" /></label>
+              <div class="field"><span class="field__label">Department</span>
+                <div class="readonly-box" id="fDept" aria-live="polite">Loading…</div>
+                <span class="field__hint">Set automatically from your account. Only students of this department can take the exam.</span></div>
+              <label class="field span-2"><span class="field__label">Description / instructions</span>
+                <textarea class="textarea" id="fDescription" rows="3" maxlength="2000" placeholder="Coverage, instructions, allowed materials…"></textarea></label>
+            </div>
+          </section>
+
+          <section class="card">
+            <header class="card__header"><h2>Who can take this exam</h2></header>
+            <div class="card__body" style="display:grid;gap:1.25rem">
+              <fieldset class="fieldset">
+                <legend class="field__label">Eligible year level(s) <span class="danger">*</span></legend>
+                <div class="check-grid" id="fYears"></div>
+                <span class="field__hint">Choose one or more. Only students of your department in these year levels can open the exam.</span>
+              </fieldset>
+              <fieldset class="fieldset">
+                <legend class="field__label">Sections (optional)</legend>
+                <div id="fSections"></div>
+              </fieldset>
+              <p class="notice" id="eligibleBox">Select the year level(s) to see how many students are eligible.</p>
+            </div>
+          </section>
+
+          <section class="card">
+            <header class="card__header"><h2>Schedule and time</h2></header>
+            <div class="card__body setup-grid">
+              <label class="field"><span class="field__label">Exam date and time (opens)</span>
+                <input class="input" id="fSchedule" type="datetime-local" /></label>
+              <label class="field"><span class="field__label">Available until (optional)</span>
+                <input class="input" id="fUntil" type="datetime-local" />
+                <span class="field__hint">After this time students can no longer start the exam.</span></label>
+              <label class="field"><span class="field__label">Duration (minutes)</span>
+                <input class="input" id="fDuration" type="number" value="45" min="1" max="600" /></label>
+              <label class="field"><span class="field__label">Violation threshold (auto-submit)</span>
+                <input class="input" id="thresholdInput" type="number" value="3" min="1" max="20" /></label>
+            </div>
+          </section>
+
+          <section class="card">
+            <header class="card__header"><h2>Proctoring rules</h2></header>
+            <div class="card__body rules-grid">
+              <label class="check"><input type="checkbox" id="ruleCamera" checked /> Require camera before starting</label>
+              <label class="check"><input type="checkbox" id="ruleAngle" checked /> Detect face angle away from screen</label>
+              <label class="check"><input type="checkbox" id="ruleGaze" checked /> Detect eye gaze off-screen</label>
+              <label class="check"><input type="checkbox" id="ruleMulti" checked /> Detect additional person on camera</label>
+              <label class="check"><input type="checkbox" id="ruleCopy" checked /> Block copy, paste and right-click</label>
+              <label class="check"><input type="checkbox" id="ruleTab" checked /> Record leaving the exam window</label>
+            </div>
+          </section>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn--primary" id="btnSaveContinue">Save setup &amp; add questions</button>
+            <button type="button" class="btn btn--outline" id="btnSaveOnly" hidden>Save changes</button>
+            <a class="btn btn--outline" href="professor-exam-creation.html">Cancel</a>
+          </div>
+        </form>
+      </main>
+
+      <footer class="site-footer">
+        EXAM SYSTEM · Intelligent Cheat Detection Web-Based Assessment System  · PLMUN
+      </footer>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/professor.js"></script>
+    <script src="js/exam-setup.js"></script>
+  </body>
+</html>

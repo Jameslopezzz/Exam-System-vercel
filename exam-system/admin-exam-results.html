@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Exam Results | EXAM System PLMUN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/professor.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body data-role="admin">
+<div class="app">
+  <header class="site-header"><div class="site-header__inner">
+    <div class="brand">
+      <div class="brand__crest"><img src="images/PLMUN_logo.png" alt="PLMUN Logo"></div>
+      <div class="brand__text"><p class="brand__name">EXAM SYSTEM</p><p class="brand__sub">Pamantasan ng Lungsod ng Muntinlupa</p></div>
+    </div>
+    <nav class="nav">
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="admin-exams.html" class="is-active">Exams</a>
+      <a href="admin-monitoring.html">Monitoring</a>
+      <a href="admin-live.html">Live Monitoring</a>
+      <a href="admin-reports.html">Reports</a>
+      <a href="admin-accounts.html">Accounts</a>
+    </nav>
+    <div class="user-box"><div><p class="user-box__name" data-user-name>Admin</p><p class="user-box__role">Administrator</p></div><a class="signout" href="index.html">Sign out</a></div>
+  </div></header>
+  <main class="main">
+    <div class="page-title"><h1>Examination Results</h1><p id="resSubtitle">Loading…</p></div>
+    <div class="monitor-toolbar">
+      <label class="sr-only" for="resExam">Examination</label><select class="select" id="resExam"><option value="">Loading…</option></select>
+    </div>
+    <div class="tabs mt-6" id="resTabs">
+      <button class="tab is-active" data-rtab="results">Student results</button>
+      <button class="tab" data-rtab="form">Exam form</button>
+    </div>
+
+    <div id="rtab-results">
+      <section class="card" id="releaseCard" hidden><header class="card__header"><h2>Release to students</h2></header>
+        <div class="card__body">
+          <p class="muted text-sm" style="margin-bottom:.6rem">Students see nothing until you release it. The server only sends a student the parts you release - nothing is merely hidden on the page.</p>
+          <label class="check"><input type="checkbox" id="relScore" /> <span><b>Scores and feedback</b> - each student sees their own score and your comment.</span></label>
+          <label class="check" style="margin-top:.4rem"><input type="checkbox" id="relAnswers" /> <span><b>Answers and correct answers</b> - each student can review their own answers against the answer key. Only possible once the exam is <b>Closed</b>.</span></label>
+          <div class="btn-row" style="margin-top:.75rem"><button type="button" class="btn btn--primary btn--sm" id="relSave">Save release settings</button><span class="text-sm" id="relNote"></span></div>
+        </div></section>
+      <div class="grid grid--stats mt-6" id="resStats"></div>
+      <section class="card mt-6"><header class="card__header"><h2>Students</h2></header>
+        <div class="card__body"><div class="scroll-x"><table class="table"><thead><tr><th>Student</th><th>Section</th><th>Status</th><th>Score</th><th>Violations</th><th>Submitted</th><th></th></tr></thead><tbody id="resBody"></tbody></table></div></div></section>
+    </div>
+
+    <div id="rtab-form" hidden>
+      <section class="card"><header class="card__header"><h2>Examination form</h2></header>
+        <div class="card__body"><p class="readonly-note" id="formNote"></p><div id="formBody"></div></div></section>
+    </div>
+  </main>
+  <footer class="site-footer">EXAM SYSTEM · Intelligent Cheat Detection Web-Based Assessment System · PLMUN</footer>
+</div>
+
+<div class="modal" id="reviewModal" hidden>
+  <button class="modal__backdrop" type="button" data-modal-close="reviewModal" aria-label="Close"></button>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Student answers" style="max-width:52rem">
+    <div class="modal__header"><h2 id="reviewTitle">Student answers</h2><button class="modal__close" type="button" data-modal-close="reviewModal" aria-label="Close">&times;</button></div>
+    <div class="modal__body" id="reviewBody"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/exam-results.js"></script>
+</body>
+</html>

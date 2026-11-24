@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Live Monitoring | EXAM System PLMUN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" />
+<script src="js/theme.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/professor.css" />
+<link rel="stylesheet" href="css/admin.css" />
+</head>
+<body data-role="admin">
+<div class="app">
+  <header class="site-header"><div class="site-header__inner">
+    <div class="brand">
+      <div class="brand__crest"><img src="images/PLMUN_logo.png" alt="PLMUN Logo"></div>
+      <div class="brand__text"><p class="brand__name">EXAM SYSTEM</p><p class="brand__sub">Pamantasan ng Lungsod ng Muntinlupa</p></div>
+    </div>
+    <nav class="nav">
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="admin-exams.html">Exams</a>
+      <a href="admin-monitoring.html">Monitoring</a>
+      <a href="admin-live.html" class="is-active">Live Monitoring</a>
+      <a href="admin-reports.html">Reports</a>
+      <a href="admin-accounts.html">Accounts</a>
+    </nav>
+    <div class="user-box"><div><p class="user-box__name" data-user-name>Admin</p><p class="user-box__role">Administrator</p></div><a class="signout" href="index.html">Sign out</a></div>
+  </div></header>
+  <main class="main">
+    <div class="page-title"><h1>Live Monitoring</h1><p id="monitorSubtitle">Loading examination…</p></div>
+    <p class="readonly-note">View only: administrators can watch students and their live camera. Warnings, force-submit and re-enabling access stay with the exam's professor.</p>
+    <div class="grid grid--monitor">
+      <div>
+        <div class="monitor-toolbar">
+          <label class="sr-only" for="monitorExam">Examination</label>
+          <select class="select" id="monitorExam"><option value="">Loading…</option></select>
+          <label class="sr-only" for="monitorSearch">Search examinees</label>
+          <input class="input" id="monitorSearch" type="search" placeholder="Search name, number or section" />
+          <label class="sr-only" for="monitorStatus">Filter by status</label>
+          <select class="select" id="monitorStatus">
+            <option value="all">All statuses</option><option value="in-progress">In progress</option><option value="flagged">Flagged</option>
+            <option value="auto-submitted">Auto-submitted</option><option value="submitted">Submitted</option>
+          </select>
+        </div>
+        <p class="text-xs muted" id="monitorNote" style="margin-bottom:.6rem"></p>
+        <div class="monitor-grid" id="monitorGrid"></div>
+      </div>
+      <div>
+        <section class="card"><header class="card__header"><h2>Examination</h2></header>
+          <div class="card__body"><dl class="detail-list" id="examInfo"></dl></div></section>
+        <section class="card mt-6"><header class="card__header"><h2>Camera and session events</h2></header>
+          <div class="card__body"><ul id="monitorEvents" aria-live="polite"><li class="muted text-sm">Nothing yet.</li></ul></div></section>
+        <section class="card mt-6"><header class="card__header"><h2>Detected violations</h2></header>
+          <div class="card__body"><ul id="monitorAlerts"></ul></div></section>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">EXAM SYSTEM · Intelligent Cheat Detection Web-Based Assessment System · PLMUN</footer>
+</div>
+
+<div class="modal" id="studentModal" hidden>
+  <button class="modal__backdrop" type="button" data-modal-close="studentModal" aria-label="Close"></button>
+  <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Examinee detail">
+    <div class="modal__header"><h2>Examinee detail</h2><button class="modal__close" type="button" data-modal-close="studentModal" aria-label="Close">&times;</button></div>
+    <div class="modal__body" id="studentModalBody"></div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/livecam.js"></script>
+<script src="js/admin-live.js"></script>
+</body>
+</html>

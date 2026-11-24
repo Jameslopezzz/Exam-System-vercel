@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Exam Questions | EXAM SYSTEM</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+    />
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/professor.css">
+  </head>
+  <body data-role="professor">
+    <div class="app">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <div class="brand">
+            <div class="brand__crest">
+              <img src="images/PLMUN_logo.png" alt="PLMUN Logo">
+            </div>
+            <div class="brand__text">
+              <p class="brand__name">EXAM SYSTEM</p>
+              <p class="brand__sub">Pamantasan ng Lungsod ng Muntinlupa</p>
+            </div>
+          </div>
+          <nav class="nav">
+            <a href="professor-dashboard.html">Dashboard</a>
+            <a href="professor-monitoring.html">Live Monitoring</a>
+            <a href="professor-exam-creation.html" class="is-active">Exam Builder</a>
+            <a href="professor-reports.html">Reports</a>
+          </nav>
+          <div class="user-box">
+            <div>
+              <p class="user-box__name" data-user-name></p>
+              <p class="user-box__role">Professor</p>
+            </div>
+            <a class="signout" href="index.html">Sign out</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="page-title">
+          <h1 id="qHeading">Exam questions</h1>
+          <p id="qSub">Loading…</p>
+        </div>
+
+        <ol class="stepper" aria-label="Progress">
+          <li class="stepper__item is-done" id="stepOne"><span class="stepper__num">1</span> <span id="stepOneLabel">Exam setup</span></li>
+          <li class="stepper__item is-current"><span class="stepper__num">2</span> Add questions</li>
+        </ol>
+
+        <p class="notice notice--ok" id="qNew" hidden>Exam setup saved. Now add the questions for this exam.</p>
+        <p class="notice notice--warn" id="qReadOnly" hidden></p>
+        <p class="notice notice--warn" id="qLock" hidden></p>
+        <p class="notice notice--bad" id="qError" hidden></p>
+
+        <section class="card" style="margin-bottom:1.25rem">
+          <header class="card__header">
+            <h2>Exam details</h2>
+            <div class="exam-row__actions" id="qActions"></div>
+          </header>
+          <div class="card__body"><dl class="summary-grid" id="qSummary"></dl><p class="text-sm" id="qDescription" style="margin-top:.75rem"></p></div>
+        </section>
+
+        <section class="card">
+          <header class="card__header">
+            <h2>Questions (<span id="qCount">0</span> &middot; <span id="qPoints">0</span> pts)</h2>
+            <button type="button" class="btn btn--primary" id="btnAddQuestion" hidden>Add question</button>
+          </header>
+          <div class="card__body">
+            <ol class="q-list" id="qList"></ol>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        EXAM SYSTEM · Intelligent Cheat Detection Web-Based Assessment System  · PLMUN
+      </footer>
+    </div>
+
+    <div class="modal" id="questionModal" hidden>
+      <button class="modal__backdrop" type="button" data-modal-close="questionModal" aria-label="Close"></button>
+      <div class="modal__panel" role="dialog" aria-modal="true" aria-label="Question">
+        <div class="modal__header">
+          <h2 id="questionModalTitle">Add question</h2>
+          <button class="modal__close" type="button" data-modal-close="questionModal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal__body" style="display:grid;gap:1rem">
+          <div class="grid" style="grid-template-columns:2fr 1fr">
+            <label class="field"><span class="field__label">Type</span>
+              <select class="select" id="qfType"><option value="multiple-choice">Multiple choice (auto-graded)</option><option value="essay">Essay (manual grading)</option></select></label>
+            <label class="field"><span class="field__label">Points</span>
+              <input class="input" id="qfPoints" type="number" value="5" min="1" max="1000" /></label>
+          </div>
+          <label class="field"><span class="field__label">Question prompt</span>
+            <textarea class="textarea" id="qfPrompt" rows="3" placeholder="Type the question here…"></textarea></label>
+          <div id="qfChoicesBox" class="eq-choices">
+            <span class="field__label">Choices &mdash; select the correct one</span>
+            <div id="qfChoices" class="eq-choices"></div>
+            <div><button type="button" class="btn btn--outline btn--sm" id="qfAddChoice">Add choice</button></div>
+          </div>
+          <div id="qfMediaBox" class="grid" style="grid-template-columns:1fr 2fr">
+            <label class="field"><span class="field__label">Media (optional)</span>
+              <select class="select" id="qfMediaKind"><option value="">None</option><option value="image">Picture URL</option><option value="video">Video URL</option></select></label>
+            <label class="field"><span class="field__label">Media link</span>
+              <input class="input" id="qfMediaSrc" placeholder="assets/diagram.png or https://…" /></label>
+          </div>
+          <p class="text-xs muted" id="qfMediaKept" hidden></p>
+          <p class="notice notice--bad" id="qfError" hidden></p>
+          <div class="btn-row">
+            <button type="button" class="btn btn--primary" id="qfSave">Save question</button>
+            <button type="button" class="btn btn--outline" id="qfSaveNew" hidden>Save &amp; add another</button>
+            <button type="button" class="btn btn--outline" data-modal-close="questionModal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/professor.js"></script>
+    <script src="js/exam-questions.js"></script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Exam Creation | EXAM SYSTEM</title>
+    
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+    />
+    <script src="js/theme.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/professor.css">
+  </head>
+  <body data-role="professor">
+    <div class="app">
+      <header class="site-header">
+        <div class="site-header__inner">
+          <div class="brand">
+            <div class="brand__crest">
+              <img src="images/PLMUN_logo.png" alt="PLMUN Logo">
+            </div>
+            <div class="brand__text">
+              <p class="brand__name">EXAM SYSTEM</p>
+              <p class="brand__sub">Pamantasan ng Lungsod ng Muntinlupa</p>
+            </div>
+          </div>
+          <nav class="nav">
+            <a href="professor-dashboard.html">Dashboard</a>
+            <a href="professor-monitoring.html">Live Monitoring</a>
+            <a href="professor-exam-creation.html" class="is-active">Exam Builder</a>
+            <a href="professor-reports.html">Reports</a>
+          </nav>
+          <div class="user-box">
+            <div>
+              <p class="user-box__name" data-user-name></p>
+              <p class="user-box__role">Professor</p>
+            </div>
+            <a class="signout" href="index.html">Sign out</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="page-title">
+          <h1>Exam Builder</h1>
+          <p>Create an exam in two steps: first the exam setup, then its questions. Every professor can see all examinations; only the creator can edit one.</p>
+        </div>
+
+        <section class="card">
+          <header class="card__header">
+            <div class="tabs" role="tablist" aria-label="Examination lists">
+              <button type="button" class="chip is-active" role="tab" id="tabMine" aria-selected="true" aria-controls="paneMine">My examinations</button>
+              <button type="button" class="chip" role="tab" id="tabAll" aria-selected="false" aria-controls="paneAll">All examinations <span class="muted" id="allCount"></span></button>
+            </div>
+            <a class="btn btn--primary" href="professor-exam-setup.html">New examination</a>
+          </header>
+          <div class="card__body">
+            <div id="paneMine" role="tabpanel">
+              <ul class="divided" id="examManagerList"></ul>
+            </div>
+            <div id="paneAll" role="tabpanel" hidden>
+              <div class="filter-row">
+                <input class="input" id="sfSearch" type="search" placeholder="Search title or code" aria-label="Search" />
+                <select class="select" id="sfDept" aria-label="Department"></select>
+                <select class="select" id="sfYear" aria-label="Year level"></select>
+                <select class="select" id="sfProf" aria-label="Created by"></select>
+                <select class="select" id="sfStatus" aria-label="Status">
+                  <option value="">All statuses</option><option value="draft">Draft</option><option value="scheduled">Scheduled</option>
+                  <option value="available">Available</option><option value="closed">Closed</option>
+                </select>
+              </div>
+              <div class="scroll-x">
+                <table class="table">
+                  <thead><tr><th>Exam</th><th>Created by</th><th>Department</th><th>Year level(s)</th><th>Schedule</th><th>Status</th><th></th></tr></thead>
+                  <tbody id="sharedBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        EXAM SYSTEM · Intelligent Cheat Detection Web-Based Assessment System  · PLMUN
+      </footer>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/professor.js"></script>
+  </body>
+</html>
